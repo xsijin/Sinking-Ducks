@@ -3,6 +3,17 @@
     margin: 0;
 }
 
+main {
+    display: flex;
+    justify-content: space-around;
+    flex: 1;
+    width: 70%;
+}
+
+#instructions {
+    text-align: center;
+}
+
 #game {
     width: 500px;
     height: 200px;
