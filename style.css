@@ -7,7 +7,7 @@ main {
     display: flex;
     justify-content: space-around;
     flex: 1;
-    width: 70%;
+    width: 100%;
 }
 
 #instructions {
@@ -54,3 +54,16 @@ main {
     100%{left:-40px;}
 }
 
+/* Tablet Device CSS */
+@media (min-width: 768px) {
+  main {
+    width: 100%;
+  }
+}
+
+/* Desktop Device CSS */
+@media (min-width: 1024px) {
+  main {
+    width: 70%;
+  }
+}
