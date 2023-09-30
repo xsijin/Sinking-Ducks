@@ -3,29 +3,48 @@
     margin: 0;
 }
 
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    align-content: space-around;
+}
+
 main {
     display: flex;
     justify-content: space-around;
     flex: 1;
     width: 100%;
+    align-items: center;
 }
 
 #instructions {
     text-align: center;
+    padding: 50px;
 }
 
 #game {
-    width: 500px;
-    height: 200px;
+    width: 400px;
+    height: 500px;
     border: 1px solid black;
+    background-color: aqua;
+    margin: auto;
+    overflow: hidden;
 }
 
 #player {
     width: 20px;
-    height: 50px;
-    background-color: red;
-    position: relative;
-    top: 150px;
+    height: 20px;
+    background-image: url("https://www.serebii.net/pokedex-sv/icon/new/912.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    top: 100px;
+    border-radius: 50%;
+    background-color: yellow;
 }
 
 .animate{
@@ -40,30 +59,25 @@ main {
 }
 
 #obstacles {
-    width: 20px;
-    height: 20px;
-    background-color: blue;
+    width: 50px;
+    height: 500px;
+    background-color: seagreen;
     position: relative;
-    top: 130px;
-    left: 480px;
+    left: 400px;
     animation: obstacles 3s infinite linear;
 }
 
 @keyframes obstacles {
-    0%{left:480px;}
-    100%{left:-40px;}
+    0%{left:400px;}
+    100%{left:-50px;}
 }
 
-/* Tablet Device CSS */
-@media (min-width: 768px) {
-  main {
-    width: 100%;
-  }
-}
-
-/* Desktop Device CSS */
-@media (min-width: 1024px) {
-  main {
-    width: 70%;
-  }
+#drown {
+    width: 50px;
+    height: 150px;
+    background-color: white;
+    position: relative;
+    left: 400px;
+    top: -500px;
+    animation: obstacles 3s infinite linear;
 }
