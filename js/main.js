@@ -13,9 +13,9 @@
 
 
  /*----- state variables -----*/
- let P1jumping = 0;
- let P2jumping = 0;
- let counter = 0;
+ let P1flapping = 0;
+ let P2flapping = 0;
+ let countScore = 0;
  let isGameOver = false;
  let twoPlayerBonus = false;
  let gameInterval;
@@ -30,18 +30,20 @@
  const onePlayer = document.getElementById("1P");
  const twoPlayer = document.getElementById("2P");
  const resetButton = document.getElementById("reset");
+ const scoreElement = document.getElementById("score");
+ const descriptionEl = document.getElementById("description");
 
  /*----- event listeners -----*/
  document.addEventListener('keydown', handleP1KeyPress);
  document.addEventListener('keydown', handleP2KeyPress);
 
-const safespotAnimationListener = () => {
+let safespotAnimationListener = () => {
     let random = -((Math.random()*300)+150);
     safespot.style.top = random + "px";
     if (twoPlayerBonus === false) {
-        counter++;
+        countScore++;
     } else {
-        counter += 2; //double points for 2 players
+        countScore += 2; //double points for 2 players
     }
     updateScore();
 };
@@ -52,10 +54,10 @@ scoreInterval = setInterval(function(){
     if (!isGameOver) {
     let playerTop = parseInt(window.getComputedStyle(player).getPropertyValue("top"));
     let player2Top = parseInt(window.getComputedStyle(player2).getPropertyValue("top"));
-    if(P1jumping==0){
+    if(P1flapping==0){
         player.style.top = (playerTop+3)+"px";
     }
-    if(P2jumping==0){
+    if(P2flapping==0){
         player2.style.top = (player2Top+3)+"px";
     }
     let obstaclesLeft = parseInt(window.getComputedStyle(obstacles).getPropertyValue("left"));
@@ -64,14 +66,12 @@ scoreInterval = setInterval(function(){
     let p2Top = -(500-player2Top);
     if((playerTop>480)||(player2Top>480)||((obstaclesLeft<20)&&(obstaclesLeft>-50)&&((pTop<safespotTop)||(pTop>safespotTop+130)))||
     ((obstaclesLeft<20)&&(obstaclesLeft>-50)&&((p2Top<safespotTop)||(p2Top>safespotTop+130)))){
-        console.log("Game over :( Score: "+(counter));
+        console.log("Game over :( Score: "+(countScore));
         player.style.top = 100 + "px";
-        updateScore();
-        counter=0;
         isGameOver = true; 
-        stopGame();
-        safespot.classList.remove("begin");
-        obstacles.classList.remove("begin");
+        updateScore();
+        countScore=0;
+        endGame();
     }}
 }, 10);
 
@@ -105,72 +105,75 @@ twoPlayer.addEventListener("click", function() {
 
 resetButton.addEventListener("click", function() {
     // Stop the game interval
-    stopGame();
+    endGame();
     // Refresh the page to reset the game
     window.location.reload();
 });
 
 
  /*----- functions -----*/
- function p1jump(){
-    P1jumping = 1;
-    let jumpCount = 0;
-    let jumpInterval = setInterval(function(){
+ function p1flap(){
+    P1flapping = 1;
+    let flapCount = 0;
+    let flapInterval = setInterval(function(){
         let playerTop = parseInt(window.getComputedStyle(player).getPropertyValue("top"));
-        if((playerTop>6) && (jumpCount<15)){
+        if((playerTop>6) && (flapCount<15)){
             player.style.top = (playerTop-5)+"px";
         }
-        if(jumpCount>20){
-            clearInterval(jumpInterval);
-            P1jumping=0;
-            jumpCount=0;
+        if(flapCount>20){
+            clearInterval(flapInterval);
+            P1flapping=0;
+            flapCount=0;
         }
-        jumpCount++;
+        flapCount++;
     },10);
 }
 
-function p2jump(){
-    P2jumping = 1;
-    let jumpCount = 0;
-    let jumpInterval = setInterval(function(){
+function p2flap(){
+    P2flapping = 1;
+    let flapCount = 0;
+    let flapInterval = setInterval(function(){
         let player2Top = parseInt(window.getComputedStyle(player2).getPropertyValue("top"));
-        if((player2Top>6) && (jumpCount<15)){
+        if((player2Top>6) && (flapCount<15)){
             player2.style.top = (player2Top-5)+"px";
         }
-        if(jumpCount>20){
-            clearInterval(jumpInterval);
-            P2jumping=0;
-            jumpCount=0;
+        if(flapCount>20){
+            clearInterval(flapInterval);
+            P2flapping=0;
+            flapCount=0;
         }
-        jumpCount++;
+        flapCount++;
     },10);
 }
 
-// function resumeGame() {
-//     isGameOver = false;
-// }
-
 function updateScore() {
-    const scoreElement = document.getElementById("score");
-    const descriptionEl = document.getElementById("description");
     if (isGameOver) {
         // Display "Game Over" in red text below the score
-        scoreElement.innerHTML = `Score: ${counter} <br><span style="color: red;">Game Over :(<br>Please reset to try again!</span>`;
+        scoreElement.innerHTML = `Score: ${countScore} <br><span style="color: red;">Game Over :(<br>Please reset to try again!</span>`;
     } else {
         // Display the current score
-        scoreElement.innerText = `Score: ${counter}`;
+        scoreElement.innerText = `Score: ${countScore}`;
         descriptionEl.innerText = `Let's keep going! Your high score to beat:`;
     }
 }
 
-function stopGame() {
-    clearInterval(gameInterval);
+function endGame() {
+    clearInterval(scoreInterval);
     safespot.removeEventListener('animationiteration', safespotAnimationListener);
+    document.removeEventListener('keydown', handleP1KeyPress);
+    document.removeEventListener('keydown', handleP2KeyPress);
+    document.removeEventListener('click', handleMouseClick);
+    safespot.classList.remove("begin");
+    obstacles.classList.remove("begin");
 }
 
 function initialize() {
+    countScore = 0;
     safespot.classList.add("begin");
     obstacles.classList.add("begin");
+    isGameOver = false;
+    P1flapping = 0;
+    P2flapping = 0;
 }
 
 function enableMobile() {
@@ -184,18 +187,18 @@ function enableMobile() {
 
 function handleP1KeyPress(event) {
     if (event.key === 'w' || event.key === 'W') {
-        p1jump();
+        p1flap();
     }
 }
 
 function handleP2KeyPress(event) {
     if (event.key === 'ArrowUp') {
-        p2jump();
+        p2flap();
     }
 }
 
 function handleMouseClick() {
-    p1jump();
+    p1flap();
 }
 
 
