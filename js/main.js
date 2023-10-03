@@ -1,5 +1,4 @@
  //stop here. something wrong with the update score
-// reset game to reinitialize game
 // make the colours nicer
 
  // Main objective of Sinking Ducks is to keep the duck (player) afloat!
@@ -10,12 +9,13 @@
 
  
  /*----- constants -----*/
- let P1jumping = 0;
- let P2jumping = 0;
- let counter = 0;
+
 
 
  /*----- state variables -----*/
+ let P1jumping = 0;
+ let P2jumping = 0;
+ let counter = 0;
  let isGameOver = false;
  let twoPlayerBonus = false;
  let gameInterval;
@@ -25,6 +25,11 @@
  const player = document.getElementById("player");
  const obstacles = document.getElementById("obstacles");
  const safespot = document.getElementById("safespot");
+ const mobilePlayer = document.getElementById("mobile");
+ const keyboardEl = document.getElementById("keyboard");
+ const onePlayer = document.getElementById("1P");
+ const twoPlayer = document.getElementById("2P");
+ const resetButton = document.getElementById("reset");
 
  /*----- event listeners -----*/
  document.addEventListener('keydown', handleP1KeyPress);
@@ -41,7 +46,6 @@ const safespotAnimationListener = () => {
     updateScore();
 };
 
-// Add the event listener
 safespot.addEventListener('animationiteration', safespotAnimationListener);
 
 scoreInterval = setInterval(function(){
@@ -72,9 +76,6 @@ scoreInterval = setInterval(function(){
 }, 10);
 
 
-const mobilePlayer = document.getElementById("mobile");
-const keyboardEl = document.getElementById("keyboard");
-
 mobilePlayer.addEventListener("click", function() {
     initialize();
     player.classList.add("player");
@@ -83,7 +84,7 @@ mobilePlayer.addEventListener("click", function() {
     keyboardEl.remove();
 });
 
-const onePlayer = document.getElementById("1P");
+
 
 onePlayer.addEventListener("click", function() {
     initialize();
@@ -91,7 +92,7 @@ onePlayer.addEventListener("click", function() {
     twoPlayerBonus = false;
 });
 
-const twoPlayer = document.getElementById("2P");
+
 
 twoPlayer.addEventListener("click", function() {
     initialize();
@@ -100,7 +101,7 @@ twoPlayer.addEventListener("click", function() {
     twoPlayerBonus = true;
 });
 
-const resetButton = document.getElementById("reset");
+
 
 resetButton.addEventListener("click", function() {
     // Stop the game interval
@@ -108,22 +109,6 @@ resetButton.addEventListener("click", function() {
     // Refresh the page to reset the game
     window.location.reload();
 });
-
-// // Add an event listener to the "Reset Game" button
-// const resetButton = document.getElementById("reset");
-
-// resetButton.addEventListener("click", function() {
-//     // Reset game variables and player position
-//     player.style.top = "170px";
-//     obstacles.style.width = "50px";
-//     obstacles.style.height = "500px";
-//     obstacles.style.left = "400px";
-//     safespot.style.width = "50px";
-//     safespot.style.height = "150px";
-//     safespot.style.left = "400px";
-//     safespot.style.top = "-500px";
-//     counter = 0;
-
 
 
  /*----- functions -----*/
@@ -170,7 +155,7 @@ function updateScore() {
     const descriptionEl = document.getElementById("description");
     if (isGameOver) {
         // Display "Game Over" in red text below the score
-        scoreElement.innerHTML = `Score: ${counter} <br><span style="color: red;">Game Over :( Please try again!</span>`;
+        scoreElement.innerHTML = `Score: ${counter} <br><span style="color: red;">Game Over :(<br>Please reset to try again!</span>`;
     } else {
         // Display the current score
         scoreElement.innerText = `Score: ${counter}`;
