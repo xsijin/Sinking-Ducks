@@ -73,12 +73,14 @@ scoreInterval = setInterval(function(){
 
 
 const mobilePlayer = document.getElementById("mobile");
+const keyboardEl = document.getElementById("keyboard");
 
 mobilePlayer.addEventListener("click", function() {
     initialize();
     player.classList.add("player");
     enableMobile();
     twoPlayerBonus = false;
+    keyboardEl.remove();
 });
 
 const onePlayer = document.getElementById("1P");
