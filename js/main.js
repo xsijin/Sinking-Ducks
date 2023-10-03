@@ -16,10 +16,9 @@
  let P1flapping = 0;
  let P2flapping = 0;
  let countScore = 0;
+ let score = 0;
  let isGameOver = false;
  let twoPlayerBonus = false;
- let gameInterval;
- let scoreInterval;
 
  /*----- cached elements  -----*/
  const player = document.getElementById("player");
@@ -34,9 +33,6 @@
  const descriptionEl = document.getElementById("description");
 
  /*----- event listeners -----*/
- document.addEventListener('keydown', handleP1KeyPress);
- document.addEventListener('keydown', handleP2KeyPress);
-
 let safespotAnimationListener = () => {
     let random = -((Math.random()*300)+150);
     safespot.style.top = random + "px";
@@ -50,34 +46,44 @@ let safespotAnimationListener = () => {
 
 safespot.addEventListener('animationiteration', safespotAnimationListener);
 
-scoreInterval = setInterval(function(){
+function gameStart() {
     if (!isGameOver) {
-    let playerTop = parseInt(window.getComputedStyle(player).getPropertyValue("top"));
-    let player2Top = parseInt(window.getComputedStyle(player2).getPropertyValue("top"));
-    if(P1flapping==0){
-        player.style.top = (playerTop+3)+"px";
+        let playerTop = parseInt(window.getComputedStyle(player).getPropertyValue("top"));
+        let player2Top = parseInt(window.getComputedStyle(player2).getPropertyValue("top"));
+
+        if (P1flapping == 0) {
+            player.style.top = (playerTop + 3) + "px";
+        }
+
+        if (P2flapping == 0) {
+            player2.style.top = (player2Top + 3) + "px";
+        }
+
+        let obstaclesLeft = parseInt(window.getComputedStyle(obstacles).getPropertyValue("left"));
+        let safespotTop = parseInt(window.getComputedStyle(safespot).getPropertyValue("top"));
+        let pTop = -(500 - playerTop);
+        let p2Top = -(500 - player2Top);
+
+        if ((playerTop > 480) || (player2Top > 480) || ((obstaclesLeft < 20) && (obstaclesLeft > -50) && ((pTop < safespotTop) || (pTop > safespotTop + 130))) || ((obstaclesLeft < 20) && (obstaclesLeft > -50) && ((p2Top < safespotTop) || (p2Top > safespotTop + 130)))) {
+            console.log("Game over :( Score: " + (countScore));
+            player.style.top = 100 + "px";
+            isGameOver = true;
+            updateScore();
+            endGame();
+        }
     }
-    if(P2flapping==0){
-        player2.style.top = (player2Top+3)+"px";
-    }
-    let obstaclesLeft = parseInt(window.getComputedStyle(obstacles).getPropertyValue("left"));
-    let safespotTop = parseInt(window.getComputedStyle(safespot).getPropertyValue("top"));
-    let pTop = -(500-playerTop);
-    let p2Top = -(500-player2Top);
-    if((playerTop>480)||(player2Top>480)||((obstaclesLeft<20)&&(obstaclesLeft>-50)&&((pTop<safespotTop)||(pTop>safespotTop+130)))||
-    ((obstaclesLeft<20)&&(obstaclesLeft>-50)&&((p2Top<safespotTop)||(p2Top>safespotTop+130)))){
-        console.log("Game over :( Score: "+(countScore));
-        player.style.top = 100 + "px";
-        isGameOver = true; 
-        updateScore();
-        countScore=0;
-        endGame();
-    }}
-}, 10);
+
+    // Request the next frame
+    requestAnimationFrame(gameStart);
+}
+
+// Start the game loop
+
 
 
 mobilePlayer.addEventListener("click", function() {
     initialize();
+    document.addEventListener('click', handleMouseClick);
     player.classList.add("player");
     enableMobile();
     twoPlayerBonus = false;
@@ -88,6 +94,7 @@ mobilePlayer.addEventListener("click", function() {
 
 onePlayer.addEventListener("click", function() {
     initialize();
+    document.addEventListener('keydown', handleP1KeyPress);
     player.classList.add("player");
     twoPlayerBonus = false;
 });
@@ -96,6 +103,8 @@ onePlayer.addEventListener("click", function() {
 
 twoPlayer.addEventListener("click", function() {
     initialize();
+    document.addEventListener('keydown', handleP1KeyPress);
+    document.addEventListener('keydown', handleP2KeyPress);
     player.classList.add("player");
     player2.classList.add("player2");
     twoPlayerBonus = true;
@@ -146,19 +155,8 @@ function p2flap(){
     },10);
 }
 
-function updateScore() {
-    if (isGameOver) {
-        // Display "Game Over" in red text below the score
-        scoreElement.innerHTML = `Score: ${countScore} <br><span style="color: red;">Game Over :(<br>Please reset to try again!</span>`;
-    } else {
-        // Display the current score
-        scoreElement.innerText = `Score: ${countScore}`;
-        descriptionEl.innerText = `Let's keep going! Your high score to beat:`;
-    }
-}
 
 function endGame() {
-    clearInterval(scoreInterval);
     safespot.removeEventListener('animationiteration', safespotAnimationListener);
     document.removeEventListener('keydown', handleP1KeyPress);
     document.removeEventListener('keydown', handleP2KeyPress);
@@ -168,6 +166,7 @@ function endGame() {
 }
 
 function initialize() {
+    gameStart();
     countScore = 0;
     safespot.classList.add("begin");
     obstacles.classList.add("begin");
@@ -202,21 +201,35 @@ function handleMouseClick() {
 }
 
 
+function updateScore() {
+    if (isGameOver) {
+        // Display "Game Over" in red text below the score
+        scoreElement.innerHTML = `Score: ${countScore} <br><span style="color: red;">Game Over :(<br>Please reset to try again!</span>`;
+        descriptionEl.innerText = message; // Update the best_score element with the appropriate message
+    } else {
+        // Display the current score
+        scoreElement.innerText = `Score: ${countScore}`;
+        descriptionEl.innerText = "Let's keep going! Your high score to beat: " + currentScore;; // Update the best_score element with the appropriate message
+    }
+}
+
 // Get the previous high score if any, or `NaN` if none
 // `localStorage.score` will be `undefined` if you've never stored a high score
 // at all (or a string otherwise). `parseFloat` will return `NaN` if you pass it
 // `undefined`, so we check that later.
-const lastHighScore = parseFloat(localStorage.score);
-// Get the string version of this score
-const scoreString = timeDiff.toFixed(3);
+// Load the last high score from local storage or default to 0 if it doesn't exist
+let lastHighScore = parseFloat(localStorage.getItem("score")) || 0;
+
+// Calculate the current score (for example, countScore is your current score)
+const currentScore = countScore;
+
 let message;
-if (isNaN(lastHighScore) || timeDiff > lastHighScore) { // ** Perhaps < ? Hard to tell from the question
+if (isNaN(lastHighScore) || currentScore > lastHighScore) {
     // New high score
-    message = "Your new best time is " + scoreString;
-    // Store the new score
-    localStorage.score = scoreString;
+    message = "Congratulations! You've set a new high score: " + currentScore;
+    // Store the new score in local storage
+    localStorage.setItem("score", currentScore);
 } else {
     // Not a new high score
-    message = "Your time was " + scoreString + "; your best time was " + localStorage.score;
+    message = "Your high score: " + currentScore;
 }
-document.getElementById("best_score").textContent = message;
