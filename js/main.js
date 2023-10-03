@@ -28,6 +28,7 @@
 
  /*----- state variables -----*/
  let isGameOver = false;
+ let twoPlayerBonus = false;
  let gameInterval;
  let scoreInterval;
 
@@ -43,7 +44,11 @@
 const safespotAnimationListener = () => {
     let random = -((Math.random()*300)+150);
     safespot.style.top = random + "px";
-    counter++;
+    if (twoPlayerBonus === false) {
+        counter++;
+    } else {
+        counter += 2; //double points for 2 players
+    }
     updateScore();
 };
 
@@ -84,6 +89,7 @@ mobilePlayer.addEventListener("click", function() {
     startGame();
     player.classList.add("player");
     enableMobile();
+    twoPlayerBonus = false;
 });
 
 const onePlayer = document.getElementById("1P");
@@ -91,6 +97,7 @@ const onePlayer = document.getElementById("1P");
 onePlayer.addEventListener("click", function() {
     startGame();
     player.classList.add("player");
+    twoPlayerBonus = false;
 });
 
 const twoPlayer = document.getElementById("2P");
@@ -99,6 +106,7 @@ twoPlayer.addEventListener("click", function() {
     startGame();
     player.classList.add("player");
     player2.classList.add("player2");
+    twoPlayerBonus = true;
 });
 
 const resetButton = document.getElementById("reset");
