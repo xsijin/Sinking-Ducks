@@ -14,7 +14,7 @@ body, html {
 }
 
 h3 {
-    font-size: 18px;
+    font-size: 12px;
 }
 
 main {
@@ -27,12 +27,12 @@ main {
 
 #instructions {
     text-align: center;
-    padding: 50px;
+    padding: 15px;
     font-size: 10px;
 }
 
 #game {
-    width: 400px;
+    width: 250px;
     height: 500px;
     border: 1px solid black;
     background-color: aqua;
@@ -129,17 +129,16 @@ button:hover {
 }
 
 /* Mobile responsive */
-@media (max-width: 400px) {
+@media (min-width: 400px) {
     h3 {
-        font-size: 12px;
+        font-size: 20px;
     }
     #game {
-        width: 250px;
+        width: 400px;
     }
 
     #instructions {
-        text-align: center;
-        padding: 15px;
-        font-size: 10px;
+        padding: 50px;
+        font-size: 14px;
     }
   }
