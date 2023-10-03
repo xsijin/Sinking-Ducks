@@ -1,7 +1,6 @@
 * {
     padding: 0;
     margin: 0;
-    touch-action: none; /* allow tapping on mobile without zooming in */
 }
 
 body, html {
@@ -29,6 +28,7 @@ main {
 #instructions {
     text-align: center;
     padding: 50px;
+    font-size: 10px;
 }
 
 #game {
@@ -127,3 +127,19 @@ button:hover {
   background-color: red;
   color: white;
 }
+
+/* Mobile responsive */
+@media (max-width: 391px) {
+    h3 {
+        font-size: 12px;
+    }
+    #game {
+        width: 300px;
+    }
+
+    #instructions {
+        text-align: center;
+        padding: 15px;
+        font-size: 10px;
+    }
+  }

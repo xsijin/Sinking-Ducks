@@ -1,24 +1,13 @@
  //stop here. something wrong with the update score
- // i just need a second player to test my 2 player logic
-// and also i need to stop my render
-// stop my score when game ends
-// ^-- maybe need use a different code for these 2
 // reset game to reinitialize game
-// double the score for 2player
 // make the colours nicer
-// mobile responsive -- change to mouse click (1 player)
 
  // Main objective of Sinking Ducks is to keep the duck (player) afloat!
  // The game is lost when the duck collides with an obstacle or sinks to the bottom of the pond.
- // Score is kept track by obstacles passed
+ // Score is kept track by obstacles passed.
+ // Score is doubled when there's 2 players.
+ // A single player can challenge themselves by using both hands to play.
 
- //--wireframe--
- //need platform to jump
- //need reset
- //show win state
- //able to choose number of players (WASD,directional key)
- //check if game is lost
- //show score
  
  /*----- constants -----*/
  let P1jumping = 0;
@@ -86,7 +75,7 @@ scoreInterval = setInterval(function(){
 const mobilePlayer = document.getElementById("mobile");
 
 mobilePlayer.addEventListener("click", function() {
-    startGame();
+    initialize();
     player.classList.add("player");
     enableMobile();
     twoPlayerBonus = false;
@@ -95,7 +84,7 @@ mobilePlayer.addEventListener("click", function() {
 const onePlayer = document.getElementById("1P");
 
 onePlayer.addEventListener("click", function() {
-    startGame();
+    initialize();
     player.classList.add("player");
     twoPlayerBonus = false;
 });
@@ -103,7 +92,7 @@ onePlayer.addEventListener("click", function() {
 const twoPlayer = document.getElementById("2P");
 
 twoPlayer.addEventListener("click", function() {
-    startGame();
+    initialize();
     player.classList.add("player");
     player2.classList.add("player2");
     twoPlayerBonus = true;
@@ -133,9 +122,6 @@ resetButton.addEventListener("click", function() {
 //     safespot.style.top = "-500px";
 //     counter = 0;
 
-//     // Resume the game
-//     resumeGame();
-// });
 
 
  /*----- functions -----*/
@@ -195,7 +181,7 @@ function stopGame() {
     safespot.removeEventListener('animationiteration', safespotAnimationListener);
 }
 
-function startGame() {
+function initialize() {
     safespot.classList.add("begin");
     obstacles.classList.add("begin");
 }
@@ -204,6 +190,9 @@ function enableMobile() {
     document.removeEventListener('keydown', handleP1KeyPress);
     document.removeEventListener('keydown', handleP2KeyPress);
     document.addEventListener('click', handleMouseClick);
+    document.addEventListener('dblclick', function(evt) {
+        evt.preventDefault();
+      });
 }
 
 function handleP1KeyPress(event) {
