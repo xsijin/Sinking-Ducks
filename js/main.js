@@ -1,4 +1,4 @@
- //stop here. something wrong with the update score
+ //stop here. something wrong with the message
 // make the colours nicer
 
  // Main objective of Sinking Ducks is to keep the duck (player) afloat!
@@ -19,6 +19,7 @@
  let score = 0;
  let isGameOver = false;
  let twoPlayerBonus = false;
+ let message = "";
 
  /*----- cached elements  -----*/
  const player = document.getElementById("player");
@@ -201,6 +202,8 @@ function handleMouseClick() {
 }
 
 
+let lastHighScore = parseFloat(localStorage.getItem("highScore")) || 0;
+
 function updateScore() {
     if (isGameOver) {
         // Display "Game Over" in red text below the score
@@ -209,27 +212,20 @@ function updateScore() {
     } else {
         // Display the current score
         scoreElement.innerText = `Score: ${countScore}`;
-        descriptionEl.innerText = "Let's keep going! Your high score to beat: " + currentScore;; // Update the best_score element with the appropriate message
+        descriptionEl.innerText = "Let's keep going! Your high score to beat: " + lastHighScore; // Update the best_score element with the appropriate message
     }
-}
 
-// Get the previous high score if any, or `NaN` if none
-// `localStorage.score` will be `undefined` if you've never stored a high score
-// at all (or a string otherwise). `parseFloat` will return `NaN` if you pass it
-// `undefined`, so we check that later.
-// Load the last high score from local storage or default to 0 if it doesn't exist
-let lastHighScore = parseFloat(localStorage.getItem("score")) || 0;
+    // Dynamically update currentScore here
+    let currentScore = countScore;
 
-// Calculate the current score (for example, countScore is your current score)
-const currentScore = countScore;
-
-let message;
-if (isNaN(lastHighScore) || currentScore > lastHighScore) {
-    // New high score
-    message = "Congratulations! You've set a new high score: " + currentScore;
-    // Store the new score in local storage
-    localStorage.setItem("score", currentScore);
-} else {
-    // Not a new high score
-    message = "Your high score: " + currentScore;
+    // Check and update high score logic remains the same
+    if (currentScore > lastHighScore) {
+        // New high score
+        message = "Congratulations! You've set a new high score: " + currentScore;
+        // Store the new score in local storage
+        localStorage.setItem("highScore", currentScore);
+    } else {
+        // Not a new high score
+        message = "Your high score: " + lastHighScore;
+    }
 }
