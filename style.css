@@ -1,6 +1,7 @@
 * {
     padding: 0;
     margin: 0;
+    touch-action: none; /* allow tapping on mobile without zooming in */
 }
 
 body, html {
@@ -11,6 +12,10 @@ body, html {
     align-items: center;
     flex-wrap: wrap;
     align-content: flex-start;
+}
+
+h3 {
+    font-size: 18px;
 }
 
 main {
@@ -35,27 +40,27 @@ main {
     overflow: hidden;
 }
 
-#player {
+.player {
     width: 20px;
     height: 20px;
-    background-image: url("https://www.serebii.net/pokedex-sv/icon/new/912.png");
     background-repeat: no-repeat;
     background-position: center;
     position: absolute;
     top: 100px;
     border-radius: 50%;
+    background-image: url("https://www.serebii.net/pokedex-sv/icon/new/912.png");
     background-color: yellow;
 }
 
-#player2 {
+.player2 {
     width: 20px;
     height: 20px;
-    background-image: url("https://www.serebii.net/pokedex-sm/icon/054.png");
     background-repeat: no-repeat;
     background-position: center;
     position: absolute;
-    top: 100px;
+    top: 150px;
     border-radius: 50%;
+    background-image: url("https://www.serebii.net/pokedex-sm/icon/054.png");
     background-color: blue;
 }
 
@@ -76,8 +81,6 @@ main {
     background-color: seagreen;
     position: relative;
     left: 400px;
-    animation: obstacles 3s infinite linear;
-    animation-play-state: running;
 }
 
 @keyframes obstacles {
@@ -92,10 +95,35 @@ main {
     position: relative;
     left: 400px;
     top: -500px;
-    animation: obstacles 3s infinite linear;
-    animation-play-state: running;
 }
 
-.paused {
-    animation-play-state: paused; /* Pause the animation */
+.begin {
+    animation: obstacles 3s infinite linear; /* start the animation */
+}
+
+button {
+    transition-duration: 0.4s;
+}
+
+button:hover {
+  background-color: aqua; 
+  color: black;
+}
+
+#reset {
+    background-color:pink; 
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    border-radius: 8px;
+    transition-duration: 0.4s;
+}
+
+#reset:hover {
+  background-color: red;
+  color: white;
 }

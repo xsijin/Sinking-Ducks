@@ -1,3 +1,13 @@
+ //stop here. something wrong with the update score
+ // i just need a second player to test my 2 player logic
+// and also i need to stop my render
+// stop my score when game ends
+// ^-- maybe need use a different code for these 2
+// reset game to reinitialize game
+// double the score for 2player
+// make the colours nicer
+// mobile responsive -- change to mouse click (1 player)
+
  // Main objective of Sinking Ducks is to keep the duck (player) afloat!
  // The game is lost when the duck collides with an obstacle or sinks to the bottom of the pond.
  // Score is kept track by obstacles passed
@@ -27,24 +37,19 @@
  const safespot = document.getElementById("safespot");
 
  /*----- event listeners -----*/
- document.addEventListener('keydown', function(event) {
-    if (event.key === 'w' || event.key === 'W') {
-        p1jump();
-    }
-});
+ document.addEventListener('keydown', handleP1KeyPress);
+ document.addEventListener('keydown', handleP2KeyPress);
 
-document.addEventListener('keydown', function(event) {
-    if (event.key === 'ArrowUp') {
-        p2jump();
-    }
-});
-
- safespot.addEventListener('animationiteration', () => {
+const safespotAnimationListener = () => {
     let random = -((Math.random()*300)+150);
     safespot.style.top = random + "px";
     counter++;
     updateScore();
-});
+};
+
+// Add the event listener
+safespot.addEventListener('animationiteration', safespotAnimationListener);
+
 scoreInterval = setInterval(function(){
     if (!isGameOver) {
     let playerTop = parseInt(window.getComputedStyle(player).getPropertyValue("top"));
@@ -61,14 +66,40 @@ scoreInterval = setInterval(function(){
     let p2Top = -(500-player2Top);
     if((playerTop>480)||(player2Top>480)||((obstaclesLeft<20)&&(obstaclesLeft>-50)&&((pTop<safespotTop)||(pTop>safespotTop+130)))||
     ((obstaclesLeft<20)&&(obstaclesLeft>-50)&&((p2Top<safespotTop)||(p2Top>safespotTop+130)))){
-        console.log("Game over :( Score: "+(counter-1));
+        console.log("Game over :( Score: "+(counter));
         player.style.top = 100 + "px";
         updateScore();
         counter=0;
         isGameOver = true; 
         stopGame();
+        safespot.classList.remove("begin");
+        obstacles.classList.remove("begin");
     }}
 }, 10);
+
+
+const mobilePlayer = document.getElementById("mobile");
+
+mobilePlayer.addEventListener("click", function() {
+    startGame();
+    player.classList.add("player");
+    enableMobile();
+});
+
+const onePlayer = document.getElementById("1P");
+
+onePlayer.addEventListener("click", function() {
+    startGame();
+    player.classList.add("player");
+});
+
+const twoPlayer = document.getElementById("2P");
+
+twoPlayer.addEventListener("click", function() {
+    startGame();
+    player.classList.add("player");
+    player2.classList.add("player2");
+});
 
 const resetButton = document.getElementById("reset");
 
@@ -140,24 +171,65 @@ function p2jump(){
 
 function updateScore() {
     const scoreElement = document.getElementById("score");
+    const descriptionEl = document.getElementById("description");
     if (isGameOver) {
         // Display "Game Over" in red text below the score
         scoreElement.innerHTML = `Score: ${counter} <br><span style="color: red;">Game Over :( Please try again!</span>`;
     } else {
         // Display the current score
-        scoreElement.textContent = `Score: ${counter}`;
+        scoreElement.innerText = `Score: ${counter}`;
+        descriptionEl.innerText = `Let's keep going! Your high score to beat:`;
     }
 }
 
 function stopGame() {
     clearInterval(gameInterval);
+    safespot.removeEventListener('animationiteration', safespotAnimationListener);
+}
+
+function startGame() {
+    safespot.classList.add("begin");
+    obstacles.classList.add("begin");
+}
+
+function enableMobile() {
+    document.removeEventListener('keydown', handleP1KeyPress);
+    document.removeEventListener('keydown', handleP2KeyPress);
+    document.addEventListener('click', handleMouseClick);
+}
+
+function handleP1KeyPress(event) {
+    if (event.key === 'w' || event.key === 'W') {
+        p1jump();
+    }
+}
+
+function handleP2KeyPress(event) {
+    if (event.key === 'ArrowUp') {
+        p2jump();
+    }
+}
+
+function handleMouseClick() {
+    p1jump();
 }
 
 
-// i just need a second player to test my 2 player logic
-// and also i need to stop my render
-// stop my score when game ends
-// ^-- maybe need use a different code for these 2
-// reset game to reinitialize game
-// double the score for 2player
-// make the colours nicer
+// Get the previous high score if any, or `NaN` if none
+// `localStorage.score` will be `undefined` if you've never stored a high score
+// at all (or a string otherwise). `parseFloat` will return `NaN` if you pass it
+// `undefined`, so we check that later.
+const lastHighScore = parseFloat(localStorage.score);
+// Get the string version of this score
+const scoreString = timeDiff.toFixed(3);
+let message;
+if (isNaN(lastHighScore) || timeDiff > lastHighScore) { // ** Perhaps < ? Hard to tell from the question
+    // New high score
+    message = "Your new best time is " + scoreString;
+    // Store the new score
+    localStorage.score = scoreString;
+} else {
+    // Not a new high score
+    message = "Your time was " + scoreString + "; your best time was " + localStorage.score;
+}
+document.getElementById("best_score").textContent = message;
