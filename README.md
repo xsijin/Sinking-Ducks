@@ -8,7 +8,7 @@ Test your skills solo or team up in 2-Player mode, where points are doubled, but
 
 Mobile-friendly display with smaller font & narrower game box:
 
-![Screenshot of mobile display with smaller font & narrower game box](/assets/images/mobile.png)
+<img src="/assets/images/mobileIOS.png" width="600">
 
 2-Player mode on PC:
 
@@ -20,7 +20,11 @@ Game over with high score achieved:
 
 ## Technologies Used
 
-JavaScript, CSS, HTML
+JavaScript, CSS, HTML, GitHub
+
+requestAnimationFrame to loop the game
+
+Local storage for retrieving high score
 
 ## Getting Started
 
@@ -51,7 +55,9 @@ As the saying goes, your greatest competition is yourself! Your high score is sa
 - Bonus points: add coins collection for bonus points.
 - User personalization: allow player(s) to choose their preferred duck avatar.
 
-## Credits
+## Resources
 
-- Duck images (Pokemon Quaxley & Psyduck) from: https://www.serebii.net/
+- Duck images (Pokemon Quaxly & Psyduck) from: https://www.serebii.net/
 - Colour palette from: https://coolors.co/
+- Disable double-tap zoom on mobile (better playability): [Stack Overflow](https://stackoverflow.com/questions/10614481/disable-double-tap-zoom-option-in-browser-on-touch-devices)
+- Utilizing localStorage: [Stack Overflow](https://stackoverflow.com/questions/63634765/making-a-high-score-best-time-localstorage-in-javascript)
