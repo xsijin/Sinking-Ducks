@@ -1,5 +1,4 @@
- //stop here. something wrong with the message
-// make the colours nicer
+// To do: make the colours nicer, refactor the code, do ReadMe
 
  // Main objective of Sinking Ducks is to keep the duck (player) afloat!
  // The game is lost when the duck collides with an obstacle or sinks to the bottom of the pond.
@@ -80,8 +79,6 @@ function gameStart() {
     // Request the next frame
     requestAnimationFrame(gameStart);
 }
-
-// Start the game loop
 
 
 
@@ -165,30 +162,28 @@ function p2flap(){
 
 
 function endGame() {
-    safespot.removeEventListener('animationiteration', safespotAnimationListener);
-    document.removeEventListener('keydown', handleP1KeyPress);
-    document.removeEventListener('keydown', handleP2KeyPress);
-    document.removeEventListener('click', handleMouseClick);
-    safespot.classList.remove("begin");
-    obstacles.classList.remove("begin");
+    safespot.removeEventListener('animationiteration', safespotAnimationListener);  // remove scoring
+    document.removeEventListener('keydown', handleP1KeyPress);      // remove event listeners
+    document.removeEventListener('keydown', handleP2KeyPress);      // remove event listeners
+    document.removeEventListener('click', handleMouseClick);        // remove event listeners
+    safespot.classList.remove("begin");     // stop animating frames via CSS
+    obstacles.classList.remove("begin");    // stop animating frames via CSS
 }
 
 function initialize() {
-    gameStart();
-    countScore = 0;
-    safespot.classList.add("begin");
-    obstacles.classList.add("begin");
-    isGameOver = false;
-    P1flapping = 0;
-    P2flapping = 0;
-    removeButtons();
+    countScore = 0;                         // reset score
+    safespot.classList.add("begin");        // begin animating frames via CSS
+    obstacles.classList.add("begin");       // begin animating frames via CSS
+    isGameOver = false;                     // disable isGameOver to display correct score messages upon reset
+    P1flapping = 0;                         // reset flap count
+    P2flapping = 0;                         // reset flap count
+    removeButtons();                        // remove start buttons once game starts
+    gameStart();                            // Start the game 
 }
 
 function enableMobile() {
-    document.removeEventListener('keydown', handleP1KeyPress);
-    document.removeEventListener('keydown', handleP2KeyPress);
     document.addEventListener('click', handleMouseClick);
-    document.addEventListener('dblclick', function(evt) {
+    document.addEventListener('dblclick', function(evt) {           // prevent mobile users from double tapping to zoom
         evt.preventDefault();
       });
 }
@@ -222,17 +217,17 @@ function updateScore() {
         // Display "Game Over" in red text below the score
         scoreElement.innerHTML = `Score: ${countScore}`;
         headerEl.innerHTML = '<span style="color: red;">Game Over :(<br>Please try again!</span>';
-        descriptionEl.innerText = message; // Update the best_score element with the appropriate message
+        descriptionEl.innerText = message; // high score message
     } else {
         // Display the current score
         scoreElement.innerText = `Score: ${countScore}`;
-        descriptionEl.innerText = "Let's keep going! Your high score to beat: " + lastHighScore; // Update the best_score element with the appropriate message
+        descriptionEl.innerText = "Let's keep going! Your high score to beat: " + lastHighScore; // high score message
     }
 
-    // Dynamically update currentScore here
+    // Dynamically update currentScore
     let currentScore = countScore;
 
-    // Check and update high score logic remains the same
+    // Check and update high score
     if (currentScore > lastHighScore) {
         // New high score
         message = "Congratulations! You've set a new high score: " + currentScore;
@@ -243,3 +238,5 @@ function updateScore() {
         message = "Your high score: " + lastHighScore;
     }
 }
+
+//use this code to delete highscore in console: localStorage.removeItem("highScore");
