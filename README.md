@@ -6,15 +6,18 @@ Test your skills solo or team up in 2-Player mode, where points are doubled, but
 
 ## Screenshots
 
+Mobile-friendly display with smaller font & narrower game box:
 ![Screenshot of mobile display with smaller font & narrower game box](/assets/images/mobile.png)
 
+2-Player mode on PC:
 ![Screenshot of 2-Player mode on PC](/assets/images/twoplayer_onpc.png)
 
+Game over with high score achieved:
 ![Screenshot of a game over with high score achieved](/assets/images/gameover_highscore.png)
 
 ## Technologies Used
 
-JavaScript, HTML, CSS
+JavaScript, CSS, HTML
 
 ## Getting Started
 
@@ -28,7 +31,7 @@ Click on "Reset Game" in order to play again.
 
 ## Your High Score
 
-As the saying goes, your greatest competition is yourself! Your high score is saved and displayed for you to beat. However, should you want to reset the high score, copy below code into your console:
+As the saying goes, your greatest competition is yourself! Your high score is saved and displayed for you to beat. However, if you wish to reset the high score, follow the steps below:
 ```
 1. On Google Chrome browser, right-click on the game page.
 2. Click on 'Inspect'
@@ -41,11 +44,11 @@ As the saying goes, your greatest competition is yourself! Your high score is sa
 ## Next Steps
 
 - Enhance user optimization: option to use spacebar key (or any key of choice) to flap the duck's wings.
-- Vary game difficulty: options for faster speed, more varied flapping styles, etc. Could be added in as items to be collected in-game as well.
+- Vary game difficulty: options for faster speed, more varied flapping styles, etc. Could be added in as booster items to be collected in-game as well.
 - Bonus points: add coins collection for bonus points.
 - User personalization: allow player(s) to choose their preferred duck avatar.
 
 ## Credits
 
-Duck images (Pokemon) from: https://www.serebii.net/
-Colour palette from: https://coolors.co/
+- Duck images (Pokemon) from: https://www.serebii.net/
+- Colour palette from: https://coolors.co/
