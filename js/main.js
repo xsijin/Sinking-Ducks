@@ -239,5 +239,3 @@ function updateScore() {
         message = "Your high score: " + lastHighScore;
     }
 }
-
-//use this code to delete highscore in console: localStorage.removeItem("highScore");
