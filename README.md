@@ -7,12 +7,15 @@ Test your skills solo or team up in 2-Player mode, where points are doubled, but
 ## Screenshots
 
 Mobile-friendly display with smaller font & narrower game box:
+
 ![Screenshot of mobile display with smaller font & narrower game box](/assets/images/mobile.png)
 
 2-Player mode on PC:
+
 ![Screenshot of 2-Player mode on PC](/assets/images/twoplayer_onpc.png)
 
 Game over with high score achieved:
+
 ![Screenshot of a game over with high score achieved](/assets/images/gameover_highscore.png)
 
 ## Technologies Used
@@ -50,5 +53,5 @@ As the saying goes, your greatest competition is yourself! Your high score is sa
 
 ## Credits
 
-- Duck images (Pokemon) from: https://www.serebii.net/
+- Duck images (Pokemon Quaxley & Psyduck) from: https://www.serebii.net/
 - Colour palette from: https://coolors.co/
