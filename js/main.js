@@ -26,7 +26,10 @@
  const obstacles = document.getElementById("obstacles");
  const safespot = document.getElementById("safespot");
  const mobilePlayer = document.getElementById("mobile");
- const keyboardEl = document.getElementById("keyboard");
+ const headerEl = document.getElementById("header");
+ const oneTextEl = document.getElementById("one-text");
+ const twoTextEl = document.getElementById("two-text");
+ const mobileTextEl = document.getElementById("mobile-text");
  const onePlayer = document.getElementById("1P");
  const twoPlayer = document.getElementById("2P");
  const resetButton = document.getElementById("reset");
@@ -88,7 +91,8 @@ mobilePlayer.addEventListener("click", function() {
     player.classList.add("player");
     enableMobile();
     twoPlayerBonus = false;
-    keyboardEl.remove();
+    oneTextEl.remove();
+    twoTextEl.remove();
 });
 
 
@@ -98,6 +102,8 @@ onePlayer.addEventListener("click", function() {
     document.addEventListener('keydown', handleP1KeyPress);
     player.classList.add("player");
     twoPlayerBonus = false;
+    mobileTextEl.remove();
+    twoTextEl.remove();
 });
 
 
@@ -109,6 +115,7 @@ twoPlayer.addEventListener("click", function() {
     player.classList.add("player");
     player2.classList.add("player2");
     twoPlayerBonus = true;
+    mobileTextEl.remove();
 });
 
 
@@ -174,6 +181,7 @@ function initialize() {
     isGameOver = false;
     P1flapping = 0;
     P2flapping = 0;
+    removeButtons();
 }
 
 function enableMobile() {
@@ -201,13 +209,19 @@ function handleMouseClick() {
     p1flap();
 }
 
+function removeButtons() {
+    onePlayer.remove();
+    twoPlayer.remove();
+    mobile.remove();
+}
 
 let lastHighScore = parseFloat(localStorage.getItem("highScore")) || 0;
 
 function updateScore() {
     if (isGameOver) {
         // Display "Game Over" in red text below the score
-        scoreElement.innerHTML = `Score: ${countScore} <br><span style="color: red;">Game Over :(<br>Please reset to try again!</span>`;
+        scoreElement.innerHTML = `Score: ${countScore}`;
+        headerEl.innerHTML = '<span style="color: red;">Game Over :(<br>Please try again!</span>';
         descriptionEl.innerText = message; // Update the best_score element with the appropriate message
     } else {
         // Display the current score
