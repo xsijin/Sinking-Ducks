@@ -41,6 +41,24 @@ main {
     overflow: hidden;
 }
 
+#pfp, #pfp2 {
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 50%;
+}
+
+#pfp {
+    background-image: url("https://www.serebii.net/pokedex-sv/icon/new/912.png");
+    background-color: #c4b7cb;
+}
+
+#pfp2 {
+    background-image: url("https://www.serebii.net/pokedex-sm/icon/054.png");
+    background-color: #98e2c6;
+}
+
 .player {
     width: 20px;
     height: 20px;
@@ -59,7 +77,7 @@ main {
     background-repeat: no-repeat;
     background-position: center;
     position: absolute;
-    top: 150px;
+    top: 140px;
     border-radius: 50%;
     background-image: url("https://www.serebii.net/pokedex-sm/icon/054.png");
     background-color: #98e2c6;
@@ -104,10 +122,14 @@ main {
 
 button {
     transition-duration: 0.4s;
+    background-color: #98e2c6; 
+    border: none;
+    padding: 3px;
+    border-radius: 5px;
 }
 
 button:hover {
-  background-color: #98e2c6; 
+  background-color: #c4b7cb; 
   color: black;
 }
 
@@ -125,12 +147,12 @@ button:hover {
 }
 
 #reset:hover {
-  background-color: red;
+  background-color: #e03616;
   color: white;
 }
 
 /* Mobile responsive */
-@media (min-width: 400px) {
+@media (min-width: 460px) {
     h3 {
         font-size: 20px;
     }
@@ -140,7 +162,7 @@ button:hover {
 
     #instructions {
         flex-basis: auto;
-        padding: 50px;
+        padding: 40px;
         font-size: 14px;
     }
   }

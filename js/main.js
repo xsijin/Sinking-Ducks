@@ -22,6 +22,7 @@
 
  /*----- cached elements  -----*/
  const player = document.getElementById("player");
+ const player2 = document.getElementById("player2");
  const obstacles = document.getElementById("obstacles");
  const safespot = document.getElementById("safespot");
  const mobilePlayer = document.getElementById("mobile");
@@ -216,7 +217,7 @@ function updateScore() {
     if (isGameOver) {
         // Display "Game Over" in red text below the score
         scoreElement.innerHTML = `Score: ${countScore}`;
-        headerEl.innerHTML = '<span style="color: red;">Game Over :(<br>Please try again!</span>';
+        headerEl.innerHTML = '<span style="color: #e03616;">Game Over :(<br>Please try again!</span>';
         descriptionEl.innerText = message; // high score message
     } else {
         // Display the current score
