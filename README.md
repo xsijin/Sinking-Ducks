@@ -11,7 +11,9 @@ Test your skills solo or team up in 2-Player mode, where points are doubled, but
 Mobile-friendly display with smaller font & narrower game box:
 
 <img src="/assets/images/mobileIOS.png" width="600">
+
 - - - -
+
 2-Player mode on PC:
 
 ![Screenshot of 2-Player mode on PC](/assets/images/twoplayer_onpc.png "Screenshot of 2-Player mode on PC")
@@ -51,22 +53,25 @@ As the saying goes, your greatest competition is yourself! Your high score is sa
 
 <details>
 <summary>However, if you wish to reset the high score, follow the steps below:</summary>
+
 <p>1. On Google Chrome browser, right-click on the game page.</p>
 <p>2. Click on 'Inspect'</p>
 <p>3. Click on 'Console'</p>
 <p>4. Paste below code in:</p>
-```
-<p>'localStorage.removeItem("highScore");'</p>
-```
+
+<p>```
+localStorage.removeItem("highScore");
+```</p>
+
 <p>5. Press 'Enter'<kbd>Return</kbd> on the keyboard</p>
 </details>
 
 ## Next Steps
 
-- [] Enhance user optimization: option to use spacebar key (or any key of choice) to flap the duck's wings.
-- [] Vary game difficulty: options for faster speed, more varied flapping styles, etc. Could be added in as booster items to be collected in-game as well.
-- [] Bonus points: add coins collection for bonus points.
-- [] User personalization: allow player(s) to choose their preferred duck avatar.
+- [ ] Enhance user optimization: option to use spacebar key (or any key of choice) to flap the duck's wings.
+- [ ] Vary game difficulty: options for faster speed, more varied flapping styles, etc. Could be added in as booster items to be collected in-game as well.
+- [ ] Bonus points: add coins collection for bonus points.
+- [ ] User personalization: allow player(s) to choose their preferred duck avatar.
 
 ## Resources
 
