@@ -52,18 +52,23 @@ Click on "Reset Game" to restart the game. Game mode can be reselected upon rest
 As the saying goes, your greatest competition is yourself! Your high score is saved and displayed for you to beat.
 
 <details>
+
 <summary>However, if you wish to reset the high score, follow the steps below:</summary>
 
-<p>1. On Google Chrome browser, right-click on the game page.</p>
-<p>2. Click on 'Inspect'</p>
-<p>3. Click on 'Console'</p>
-<p>4. Paste below code in:</p>
+1. On Google Chrome browser, right-click on the game page.
 
-<p>
-> localStorage.removeItem("highScore");
-</p>
+2. Click on 'Inspect'
 
-<p>5. Press <kbd>Enter</kbd> on the keyboard</p>
+3. Click on 'Console'
+
+4. Paste below code in:
+
+```ruby
+localStorage.removeItem("highScore");
+```
+
+5. Press <kbd>Enter</kbd> on the keyboard
+
 </details>
 
 ## Next Steps
