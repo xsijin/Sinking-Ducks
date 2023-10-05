@@ -41,7 +41,7 @@ Select from available game modes (with corresponding instructions) to begin.
 Mobile Player | Player 1 | Player 2
 | :---: | :---: | :---:
 Tap on the screen to flap your wings; Left-click on the mouse to flap your wings.  | Press "W" on the keyboard to flap your wings. | Press "Up Arrow" on the keyboard to flap your wings.
-<img src="https://www.serebii.net/pokedex-sv/icon/new/912.png" width="32">  | <img src="https://www.serebii.net/pokedex-sv/icon/new/912.png" width="32"> | <img src="https://www.serebii.net/pokedex-sm/icon/054.png">
+<img src="https://www.serebii.net/pokedex-sv/icon/new/912.png" width="30">  | <img src="https://www.serebii.net/pokedex-sv/icon/new/912.png" width="32"> | <img src="https://www.serebii.net/pokedex-sm/icon/054.png">
 
 Click on "Reset Game" to restart the game. Game mode can be reselected upon restart.
 
@@ -59,11 +59,13 @@ As the saying goes, your greatest competition is yourself! Your high score is sa
 <p>3. Click on 'Console'</p>
 <p>4. Paste below code in:</p>
 
-<p>```
+<p>
+```
 localStorage.removeItem("highScore");
-```</p>
+```
+</p>
 
-<p>5. Press 'Enter'<kbd>Return</kbd> on the keyboard</p>
+<p>5. Press 'Enter'<kbd>Enter</kbd> on the keyboard</p>
 </details>
 
 ## Next Steps
