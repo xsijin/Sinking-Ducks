@@ -41,7 +41,7 @@ main {
     overflow: hidden;
 }
 
-#pfp, #pfp2 {
+#pfp, #pfp2, .player, .player2 {
     width: 20px;
     height: 20px;
     background-repeat: no-repeat;
@@ -60,25 +60,15 @@ main {
 }
 
 .player {
-    width: 20px;
-    height: 20px;
-    background-repeat: no-repeat;
-    background-position: center;
     position: absolute;
     top: 100px;
-    border-radius: 50%;
     background-image: url("https://www.serebii.net/pokedex-sv/icon/new/912.png");
     background-color: #c4b7cb;
 }
 
 .player2 {
-    width: 20px;
-    height: 20px;
-    background-repeat: no-repeat;
-    background-position: center;
     position: absolute;
     top: 140px;
-    border-radius: 50%;
     background-image: url("https://www.serebii.net/pokedex-sm/icon/054.png");
     background-color: #98e2c6;
 }
