@@ -6,22 +6,28 @@
 
  
  /*----- constants -----*/
-
-
+const gameHeight = 500;
+const sunkHeight = 480;     // game height (500px) - player height (20px)
+const safeHeight = 130;     // safespot height (150px) - player height (20px)
+const playerWidth = 20;
+const obstacleWidth = 50;
+const maxDuckHeight = 5;    // limit maximum duck flap height to top 5px
+const duckGravity = 3;
+const flapDistance = 5;     // flap distance > gravity
 
  /*----- state variables -----*/
- let P1flapping = 0;
- let P2flapping = 0;
+ let p1flapping = 0;
+ let p2flapping = 0;
  let countScore = 0;
  let isGameOver = false;
  let twoPlayerBonus = false;
  let message = "";
  let lastHighScore = parseFloat(localStorage.getItem("highScore")) || 0;
 
- // score event listener
+ // score event listener to check if player pass through the safe spot
 let safespotAnimationListener = () => {
-    let random = -((Math.random()*300)+150);
-    safespot.style.top = random + "px";
+    let random = -((Math.random()*300)+150); // random safe spot between height -150~-450
+    safespot.style.top = random + "px"; // top position of safe spot
     if (twoPlayerBonus === false) {
         countScore++;
     } else {
@@ -87,28 +93,28 @@ resetButton.addEventListener("click", function() {
 
  /*----- functions -----*/
 
-// function to start game + collision
+// function to start game; gravity & collision
  function gameStart() {
     if (!isGameOver) {
         let playerTop = parseInt(window.getComputedStyle(player).getPropertyValue("top"));
         let player2Top = parseInt(window.getComputedStyle(player2).getPropertyValue("top"));
 
-        if (P1flapping == 0) {
-            player.style.top = (playerTop + 3) + "px";
+        if (p1flapping === 0) {         // gravity only occurs when player is NOT flapping; P1flapping = 1 when flapping, 0 when not flapping
+            player.style.top = (playerTop + duckGravity) + "px";
         }
 
-        if (P2flapping == 0) {
-            player2.style.top = (player2Top + 3) + "px";
+        if (p2flapping === 0) {         // gravity only occurs when player2 is NOT flapping; P2flapping = 1 when flapping, 0 when not flapping
+            player2.style.top = (player2Top + duckGravity) + "px";
         }
 
         let obstaclesLeft = parseInt(window.getComputedStyle(obstacles).getPropertyValue("left"));
         let safespotTop = parseInt(window.getComputedStyle(safespot).getPropertyValue("top"));
-        let pTop = -(500 - playerTop);
-        let p2Top = -(500 - player2Top);
-
-        if ((playerTop > 480) || (player2Top > 480) || ((obstaclesLeft < 20) && (obstaclesLeft > -50) && ((pTop < safespotTop) || (pTop > safespotTop + 130))) || ((obstaclesLeft < 20) && (obstaclesLeft > -50) && ((p2Top < safespotTop) || (p2Top > safespotTop + 130)))) {
+        let pTop = -(gameHeight - playerTop);
+        let p2Top = -(gameHeight - player2Top);
+        
+        // collision
+        if ((playerTop > sunkHeight) || (player2Top > sunkHeight) || ((obstaclesLeft < playerWidth) && (obstaclesLeft > -obstacleWidth) && ((pTop < safespotTop) || (pTop > safespotTop + safeHeight))) || ((obstaclesLeft < playerWidth) && (obstaclesLeft > -obstacleWidth) && ((p2Top < safespotTop) || (p2Top > safespotTop + safeHeight)))) {
             console.log("Game over :( Score: " + (countScore));
-            player.style.top = 100 + "px";
             isGameOver = true;
             updateScore();
             endGame();
@@ -119,36 +125,36 @@ resetButton.addEventListener("click", function() {
     requestAnimationFrame(gameStart);
 }
 
-// function for P1 flapping style
+// function for P1 flapping style, P1flapping = 1 when flapping, 0 when not flapping
 function p1flap(){
-    P1flapping = 1;
+    p1flapping = 1;
     let flapCount = 0;
     let flapInterval = setInterval(function(){
         let playerTop = parseInt(window.getComputedStyle(player).getPropertyValue("top"));
-        if((playerTop>6) && (flapCount<15)){
-            player.style.top = (playerTop-5)+"px";
+        if((playerTop>maxDuckHeight) && (flapCount<15)){
+            player.style.top = (playerTop-flapDistance)+"px";
         }
         if(flapCount>20){
             clearInterval(flapInterval);
-            P1flapping=0;
-            flapCount=0;
+            p1flapping = 0;         // restart for gravity pull
+            flapCount = 0;
         }
         flapCount++;
-    },10);
+    }, 10);
 }
 
-// function for P2 flapping style
+// function for P2 flapping style,  P2flapping = 1 when flapping, 0 when not flapping
 function p2flap(){
-    P2flapping = 1;
+    p2flapping = 1;
     let flapCount = 0;
     let flapInterval = setInterval(function(){
         let player2Top = parseInt(window.getComputedStyle(player2).getPropertyValue("top"));
-        if((player2Top>6) && (flapCount<15)){
-            player2.style.top = (player2Top-5)+"px";
+        if((player2Top>maxDuckHeight) && (flapCount<15)){
+            player2.style.top = (player2Top-flapDistance)+"px";
         }
         if(flapCount>20){
             clearInterval(flapInterval);
-            P2flapping=0;
+            p2flapping=0;         // restart for gravity pull
             flapCount=0;
         }
         flapCount++;
@@ -170,8 +176,6 @@ function initialize() {
     safespot.classList.add("begin");        // begin animating safe frames via CSS
     obstacles.classList.add("begin");       // begin animating obstacle frames via CSS
     isGameOver = false;                     // disable isGameOver to remove Game Over message
-    P1flapping = 0;                         // reset flap count for P1
-    P2flapping = 0;                         // reset flap count for P2
     removeButtons();                        // remove start buttons once game starts
     gameStart();                            // Start the game animation
     safespot.addEventListener('animationiteration', safespotAnimationListener); // begin score
