@@ -134,19 +134,33 @@ button:hover {
   color: white;
 }
 
-/* Mobile responsive */
+/* Device responsive */
 @media (min-width: 460px) {
+    h3 {
+        font-size: 16px;
+    }
+
+    #game {
+        width: 280px;
+    }
+
+    #instructions {
+        flex-basis: auto;
+        font-size: 12px;
+    }
+  }
+
+  @media (min-width: 768px) {
     h3 {
         font-size: 20px;
     }
 
     #game {
-        width: 400px;
+        width: 390px;
     }
 
     #instructions {
         flex-basis: auto;
-        padding: 22px;
         font-size: 14px;
         width: 365px;
     }
