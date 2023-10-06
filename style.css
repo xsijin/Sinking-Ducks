@@ -14,7 +14,7 @@ body, html {
 }
 
 h3 {
-    font-size: 12px;
+    font-size: 14px;
 }
 
 main {
@@ -28,8 +28,8 @@ main {
 #instructions {
     text-align: center;
     flex-basis: 190px;
-    padding: 15px;
-    font-size: 10px;
+    padding: 3px;
+    font-size: 12px;
 }
 
 #game {
@@ -37,7 +37,6 @@ main {
     height: 500px;
     border: 1px solid black;
     background-color: #bfedef;
-    margin: auto;
     overflow: hidden;
 }
 
@@ -70,10 +69,10 @@ main {
 }
 
 .animate{
-    animation: jump 500ms;
+    animation: flap 500ms;
 }
 
-@keyframes jump {
+@keyframes flap {
     0%{top: 150px;}
     30%{top: 100px;}
     70%{top: 100px;}
@@ -109,6 +108,7 @@ main {
 button {
     transition-duration: 0.4s;
     background-color: #98e2c6; 
+    text-align: center;
     border: none;
     padding: 3px;
     border-radius: 5px;
@@ -125,9 +125,6 @@ button:hover {
     color: white;
     padding: 8px 12px;
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
     border-radius: 8px;
     transition-duration: 0.4s;
 }
@@ -142,6 +139,7 @@ button:hover {
     h3 {
         font-size: 20px;
     }
+
     #game {
         width: 400px;
     }
