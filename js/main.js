@@ -13,10 +13,22 @@
  let P1flapping = 0;
  let P2flapping = 0;
  let countScore = 0;
- let score = 0;
  let isGameOver = false;
  let twoPlayerBonus = false;
  let message = "";
+ let lastHighScore = parseFloat(localStorage.getItem("highScore")) || 0;
+
+ // score event listener
+let safespotAnimationListener = () => {
+    let random = -((Math.random()*300)+150);
+    safespot.style.top = random + "px";
+    if (twoPlayerBonus === false) {
+        countScore++;
+    } else {
+        countScore += 2; //double points for 2 players
+    }
+    updateScore();
+};
 
  /*----- cached elements  -----*/
  const player = document.getElementById("player");
@@ -35,20 +47,48 @@
  const descriptionEl = document.getElementById("description");
 
  /*----- event listeners -----*/
-let safespotAnimationListener = () => {
-    let random = -((Math.random()*300)+150);
-    safespot.style.top = random + "px";
-    if (twoPlayerBonus === false) {
-        countScore++;
-    } else {
-        countScore += 2; //double points for 2 players
-    }
-    updateScore();
-};
 
-safespot.addEventListener('animationiteration', safespotAnimationListener);
+ // event listener to start mobile-player's game
+ mobilePlayer.addEventListener("click", function() {
+    initialize();                       // start game
+    document.addEventListener('click', handleMouseClick);   // mobile flap event listener
+    player.classList.add("player");     // add P1 avatar into game
+    enableMobile();                     // enable mobile settings
+    twoPlayerBonus = false;             // no bonus points for 1P
+    oneTextEl.remove();                 // remove instructions for 1P
+    twoTextEl.remove();                 // remove instructions for 2P
+});
 
-function gameStart() {
+// event listener to start 1-player's game
+onePlayer.addEventListener("click", function() {
+    initialize();                       // start game
+    document.addEventListener('keydown', handleP1KeyPress); // P1 flap event listener
+    player.classList.add("player");     // add P1 avatar into game
+    twoPlayerBonus = false;             // no bonus points for 1P
+    mobileTextEl.remove();              // remove instructions for mobile
+    twoTextEl.remove();                 // remove instructions for 2P
+});
+
+// event listener to start 2-player's game
+twoPlayer.addEventListener("click", function() {
+    initialize();                       // start game
+    document.addEventListener('keydown', handleP1KeyPress); // P1 flap event listener
+    document.addEventListener('keydown', handleP2KeyPress); // P2 flap event listener
+    player.classList.add("player");     // add P1 avatar into game
+    player2.classList.add("player2");   // add P2 avatar into game
+    twoPlayerBonus = true;              // 2x bonus points for 2P
+    mobileTextEl.remove();              // remove instructions for mobile
+});
+
+// reset game by refreshing the page
+resetButton.addEventListener("click", function() {
+    window.location.reload();
+});
+
+ /*----- functions -----*/
+
+// function to start game + collision
+ function gameStart() {
     if (!isGameOver) {
         let playerTop = parseInt(window.getComputedStyle(player).getPropertyValue("top"));
         let player2Top = parseInt(window.getComputedStyle(player2).getPropertyValue("top"));
@@ -79,53 +119,8 @@ function gameStart() {
     requestAnimationFrame(gameStart);
 }
 
-
-
-mobilePlayer.addEventListener("click", function() {
-    initialize();
-    document.addEventListener('click', handleMouseClick);
-    player.classList.add("player");
-    enableMobile();
-    twoPlayerBonus = false;
-    oneTextEl.remove();
-    twoTextEl.remove();
-});
-
-
-
-onePlayer.addEventListener("click", function() {
-    initialize();
-    document.addEventListener('keydown', handleP1KeyPress);
-    player.classList.add("player");
-    twoPlayerBonus = false;
-    mobileTextEl.remove();
-    twoTextEl.remove();
-});
-
-
-
-twoPlayer.addEventListener("click", function() {
-    initialize();
-    document.addEventListener('keydown', handleP1KeyPress);
-    document.addEventListener('keydown', handleP2KeyPress);
-    player.classList.add("player");
-    player2.classList.add("player2");
-    twoPlayerBonus = true;
-    mobileTextEl.remove();
-});
-
-
-
-resetButton.addEventListener("click", function() {
-    // Stop the game interval
-    endGame();
-    // Refresh the page to reset the game
-    window.location.reload();
-});
-
-
- /*----- functions -----*/
- function p1flap(){
+// function for P1 flapping style
+function p1flap(){
     P1flapping = 1;
     let flapCount = 0;
     let flapInterval = setInterval(function(){
@@ -142,6 +137,7 @@ resetButton.addEventListener("click", function() {
     },10);
 }
 
+// function for P2 flapping style
 function p2flap(){
     P2flapping = 1;
     let flapCount = 0;
@@ -159,58 +155,61 @@ function p2flap(){
     },10);
 }
 
-
 function endGame() {
     safespot.removeEventListener('animationiteration', safespotAnimationListener);  // remove scoring
-    document.removeEventListener('keydown', handleP1KeyPress);      // remove event listeners
-    document.removeEventListener('keydown', handleP2KeyPress);      // remove event listeners
-    document.removeEventListener('click', handleMouseClick);        // remove event listeners
-    safespot.classList.remove("begin");     // stop animating frames via CSS
-    obstacles.classList.remove("begin");    // stop animating frames via CSS
+    document.removeEventListener('keydown', handleP1KeyPress);      // remove event listener for P1
+    document.removeEventListener('keydown', handleP2KeyPress);      // remove event listener for P2
+    document.removeEventListener('click', handleMouseClick);        // remove event listener for mobileplayer
+    safespot.classList.remove("begin");     // stop animating safe frames via CSS
+    obstacles.classList.remove("begin");    // stop animating obstacle frames via CSS
 }
 
 function initialize() {
     countScore = 0;                         // reset score
-    safespot.classList.add("begin");        // begin animating frames via CSS
-    obstacles.classList.add("begin");       // begin animating frames via CSS
-    isGameOver = false;                     // disable isGameOver to display correct score messages upon reset
-    P1flapping = 0;                         // reset flap count
-    P2flapping = 0;                         // reset flap count
+    safespot.classList.add("begin");        // begin animating safe frames via CSS
+    obstacles.classList.add("begin");       // begin animating obstacle frames via CSS
+    isGameOver = false;                     // disable isGameOver to remove Game Over message
+    P1flapping = 0;                         // reset flap count for P1
+    P2flapping = 0;                         // reset flap count for P2
     removeButtons();                        // remove start buttons once game starts
-    gameStart();                            // Start the game 
+    gameStart();                            // Start the game animation
+    safespot.addEventListener('animationiteration', safespotAnimationListener); // begin score
 }
 
+// prevent double-tap zoom on mobile
 function enableMobile() {
-    document.addEventListener('click', handleMouseClick);
     document.addEventListener('dblclick', function(evt) {           // prevent mobile users from double tapping to zoom
         evt.preventDefault();
       });
 }
 
+// for P1 - press "W" to flap
 function handleP1KeyPress(event) {
     if (event.key === 'w' || event.key === 'W') {
         p1flap();
     }
 }
 
+// for P2 - press "Up Arrow" to flap
 function handleP2KeyPress(event) {
     if (event.key === 'ArrowUp') {
         p2flap();
     }
 }
 
+// for P1 on mobile - left-click mouse to flap
 function handleMouseClick() {
     p1flap();
 }
 
+// remove buttons once game start
 function removeButtons() {
     onePlayer.remove();
     twoPlayer.remove();
     mobile.remove();
 }
 
-let lastHighScore = parseFloat(localStorage.getItem("highScore")) || 0;
-
+// score messages
 function updateScore() {
     if (isGameOver) {
         // Display "Game Over" in red text below the score
