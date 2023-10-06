@@ -1,10 +1,8 @@
-// To do: make the colours nicer, refactor the code, do ReadMe
-
  // Main objective of Sinking Ducks is to keep the duck (player) afloat!
  // The game is lost when the duck collides with an obstacle or sinks to the bottom of the pond.
- // Score is kept track by obstacles passed.
+ // Score is kept track by obstacles passed successfully.
  // Score is doubled when there's 2 players.
- // A single player can challenge themselves by using both hands to play.
+ // A single player can challenge themselves by using dual control of 2-Player mode.
 
  
  /*----- constants -----*/

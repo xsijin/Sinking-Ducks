@@ -50,25 +50,23 @@ main {
 }
 
 #pfp, .player {
-    background-image: url("/assets/images/p1.png");
+    background-image: url("./assets/images/p1.png");
     background-color: #c4b7cb;
 }
 
 #pfp2, .player2 {
-    background-image: url("/assets/images/p2.png");
+    background-image: url("./assets/images/p2.png");
     background-color: #98e2c6;
 }
 
-.player {
+.player {   /* starting position of player1 */
     position: absolute;
     top: 100px;
-    background-image: url("/assets/images/p1.png");
 }
 
-.player2 {
+.player2 {  /* starting position of player2 */
     position: absolute;
     top: 140px;
-    background-image: url("/assets/images/p2.png");
 }
 
 .animate{
