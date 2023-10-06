@@ -68,7 +68,7 @@ main {
     top: 140px;
 }
 
-.animate{
+.animate {
     animation: flap 500ms;
 }
 
@@ -131,8 +131,11 @@ button:hover {
 
 #reset:hover {
   background-color: #e03616;
-  color: white;
 }
+
+#reset.highlight {
+  background-color: #e03616;
+  }
 
 /* Device responsive */
 @media (min-width: 460px) {
@@ -156,7 +159,7 @@ button:hover {
     }
 
     #game {
-        width: 390px;
+        width: 400px;
     }
 
     #instructions {

@@ -162,6 +162,7 @@ function endGame() {
     document.removeEventListener('click', handleMouseClick);        // remove event listener for mobileplayer
     safespot.classList.remove("begin");     // stop animating safe frames via CSS
     obstacles.classList.remove("begin");    // stop animating obstacle frames via CSS
+    resetButton.classList.add("highlight"); // Reset button lights up
 }
 
 function initialize() {
