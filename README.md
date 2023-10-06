@@ -77,6 +77,7 @@ localStorage.removeItem("highScore");
 - [ ] Vary game difficulty: options for faster speed, more varied flapping styles, etc. Could be added in as booster items to be collected in-game as well.
 - [ ] Bonus points: add coins collection for bonus points.
 - [ ] User personalization: allow player(s) to choose their preferred duck avatar.
+- [ ] Fix favicon on iPhone safari tab
 
 ## Resources
 
