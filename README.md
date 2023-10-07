@@ -115,9 +115,9 @@ To optimize the mobile game mode to work on all devices.
 
 ![Game box moves away from the top](/assets/images/glitch.png "Game box moves away from the top")
 
-***Solution***
+**Solution**
 
-After spending a lot of time experimenting with Google Chome devtools responsive device toggle, added media queries for font sizes & game box width that prevent instructions from getting cut off:
+After spending a lot of time experimenting with Google Chome devtools responsive device toggle to find breakpoints, added media queries for font sizes & game box width that prevent instructions from getting cut off:
 
 - Default = for phone screen
 - @media (min-width: 460px) = for tablet screen
