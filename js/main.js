@@ -126,39 +126,45 @@ resetButton.addEventListener("click", function() {
 }
 
 // function for P1 flapping style, P1flapping = 1 when flapping, 0 when not flapping
-function p1flap(){
+function p1flap() {
     p1flapping = 1;
     let flapCount = 0;
-    let flapInterval = setInterval(function(){
+
+    function flap() {
         let playerTop = parseInt(window.getComputedStyle(player).getPropertyValue("top"));
-        if((playerTop>maxDuckHeight) && (flapCount<15)){
-            player.style.top = (playerTop-flapDistance)+"px";
+        if (playerTop > maxDuckHeight && flapCount < 15) {
+            player.style.top = (playerTop - flapDistance) + "px";
         }
-        if(flapCount>20){
-            clearInterval(flapInterval);
-            p1flapping = 0;         // restart for gravity pull
+        if (flapCount <= 20) {
+            flapCount++;
+            requestAnimationFrame(flap);
+        } else {
+            p1flapping = 0; // reset for gravity pull
             flapCount = 0;
         }
-        flapCount++;
-    }, 10);
+    }
+    flap();
 }
 
 // function for P2 flapping style,  P2flapping = 1 when flapping, 0 when not flapping
-function p2flap(){
+function p2flap() {
     p2flapping = 1;
     let flapCount = 0;
-    let flapInterval = setInterval(function(){
+
+    function flap() {
         let player2Top = parseInt(window.getComputedStyle(player2).getPropertyValue("top"));
-        if((player2Top>maxDuckHeight) && (flapCount<15)){
-            player2.style.top = (player2Top-flapDistance)+"px";
+        if (player2Top > maxDuckHeight && flapCount < 15) {
+            player2.style.top = (player2Top - flapDistance) + "px";
         }
-        if(flapCount>20){
-            clearInterval(flapInterval);
-            p2flapping=0;         // restart for gravity pull
-            flapCount=0;
+        if (flapCount <= 20) {
+            flapCount++;
+            requestAnimationFrame(flap);
+        } else {
+            p2flapping = 0; // reset for gravity pull
+            flapCount = 0;
         }
-        flapCount++;
-    },10);
+    }
+    flap();
 }
 
 function endGame() {
