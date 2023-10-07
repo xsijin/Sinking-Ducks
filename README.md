@@ -73,13 +73,61 @@ localStorage.removeItem("highScore");
 
 ## Next Steps
 
-- [ ] Game enhancement: Switch game to be full screen instead and hide all instructions once game starts.
-- [ ] Enhance user optimization: option to use spacebar key (or any key of choice) to flap the duck's wings.
+- [ ] Game optimization: Reset button to reset state instead of reload window. Switch game to be full screen instead and hide all instructions once game starts.
+- [ ] Enhance user experience: option to use spacebar key (or any key of choice) to flap the duck's wings, option to pause game, option to clear high score in localStorage.
 - [ ] Vary game difficulty: options for faster speed, more varied flapping styles, etc. Could be added in as booster items to be collected in-game as well.
 - [ ] Bonus points: add coins collection for bonus points.
 - [ ] User personalization: allow player(s) to choose their preferred duck avatar.
-- [ ] Visual improvements: Add seaweed shape to the obstacles
-- [ ] Page enhancement: Add favicon to iPhone safari tab
+- [ ] Visual improvements: Add seaweed images to the obstacles.
+- [ ] Page enhancement: Add favicon to iPhone safari tab.
+
+## Favourite Javascript Function
+
+My favourite part of the javascript is finally understanding how functions within functions work. I was able to bundle similar & repeated functions which makes my code look neater and less DRY.
+
+```
+function initialize() {
+    countScore = 0;
+    safespot.classList.add("begin");
+    obstacles.classList.add("begin");
+    isGameOver = false;
+    removeButtons();
+    gameStart();
+    safespot.addEventListener('animationiteration', safespotAnimationListener);
+}
+```
+
+For the above, I added a single removeButtons(); function instead of having 3 separate removeButton functions for each button.
+
+```
+function removeButtons() {
+    onePlayer.remove();
+    twoPlayer.remove();
+    mobile.remove();
+}
+```
+
+## Biggest Challenge
+
+To optimize the mobile game mode to work on all devices.
+ - Smaller screens → require smaller font size & narrower game width → if not either the instructions will get cut off, or the game box display jumps up and down due to the extended height of the instructions section to accommodate the instructions.
+ - Affects user experience
+
+![Game box moves away from the top](/assets/images/glitch.png "Game box moves away from the top")
+
+*** Solution ***
+
+After spending a lot of time experimenting with Google Chome devtools responsive device toggle, added media queries for font sizes & game box width that prevent instructions from getting cut off:
+
+- Default = for phone screen
+- @media (min-width: 460px) = for tablet screen
+- @media (min-width: 768px) = for PC screen
+
+## Key Learning / Takeaways
+
+ - Mobile first design (can potentially save a lot of time)
+ - Sequence of coding matters in JS
+ - classList is very effective but CSS is defined by specificity, not sequence
 
 ## Resources
 
