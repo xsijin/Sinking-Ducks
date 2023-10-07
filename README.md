@@ -73,10 +73,12 @@ localStorage.removeItem("highScore");
 
 ## Next Steps
 
+- [ ] Game enhancement: Switch game to be full screen instead and hide all instructions once game starts.
 - [ ] Enhance user optimization: option to use spacebar key (or any key of choice) to flap the duck's wings.
 - [ ] Vary game difficulty: options for faster speed, more varied flapping styles, etc. Could be added in as booster items to be collected in-game as well.
 - [ ] Bonus points: add coins collection for bonus points.
 - [ ] User personalization: allow player(s) to choose their preferred duck avatar.
+- [ ] Visual improvements: Add seaweed shape to the obstacles
 - [ ] Page enhancement: Add favicon to iPhone safari tab
 
 ## Resources
